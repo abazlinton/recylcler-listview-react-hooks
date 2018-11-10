@@ -1,34 +1,37 @@
-import React, {useState, useRef} from 'react';
+import React, { useState } from 'react';
 import Row from './Row';
 import './List.css'
 
 const List = () => {
 
-  const listRef = useRef(null);
+  const [scrollPos, setScrollPos] = useState(0);
 
-  const onScroll = () => {
-    console.log(listRef.current.scrollTop)
+  const onScroll = (e) => {
+    setScrollPos(e.target.scrollTop)
   }
 
   const rows = []
   for (let index = 0; index < 100; index++) {
     rows.push(
-      <Row
-        key={index}
-      >
+      <Row key={index}>
         {index}
       </Row>
     )
   }
 
   return (
-    <ul 
-      className="list" 
-      ref={listRef}
-      onScroll={onScroll}
-    >
-    {rows}
-    </ul>
+    <React.Fragment>
+      <ul
+        className="list"
+        onScroll={onScroll}
+      >
+        {rows}
+      </ul>
+      <dl>
+        <dt>List Scroll Pos</dt>
+        <dd>{scrollPos}</dd>
+      </dl>
+    </React.Fragment>
   )
 }
 
